@@ -2,7 +2,7 @@ import { Card, Rate, ConfigProvider } from 'antd';
 import classes from './CardElement.module.scss';
 import colorAverage from '../../helpers/colorAverage.ts';
 import { IFilm } from '../../types/types.ts';
-import { useState } from 'react';
+
 import { rateFilm } from '../../api/filmService.ts';
 
 const CardElement = ({
@@ -14,7 +14,6 @@ const CardElement = ({
   genre_ids,
   vote_average,
 }: IFilm) => {
-  const [rating, setRating] = useState<number>();
   return (
     <Card hoverable={true} className={classes.card} variant="borderless">
       <div className={classes.information}>

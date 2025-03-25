@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getFilms } from '../../api/filmService.ts';
 import { IFilms } from '../../types/types.ts';
 import { Col, Row } from 'antd';
@@ -15,13 +15,17 @@ const CardList = ({ page, value }: CardListProps) => {
   useEffect(() => {
     window.scroll({ top: 0, left: 0, behavior: 'smooth' });
     getFilms(page, value)
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       .then(res => (console.log(res.data), setResult(res.data)))
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       .catch(err => console.log(err));
   }, [page, value]);
   return (
     <div className={classes.container}>
       <Row gutter={16}>
-        {result.results?.map((film, index) => (
+        {result.results?.map(film => (
           <Col key={film.id} span={12}>
             <CardElement
               key={film.id}

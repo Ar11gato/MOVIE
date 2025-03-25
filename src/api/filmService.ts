@@ -1,9 +1,11 @@
-import axios, { AxiosResponse } from 'axios';
-import { IFilms } from '../types/types.ts';
+import axios from 'axios';
 
 export const getFilms = (
   page: number,
   value: string
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
 ): axios.AxiosRequestConfig['data'] => {
   const options = {
     method: 'GET',
@@ -20,7 +22,7 @@ export const getFilms = (
   return axios.request(options);
 };
 
-export const rateFilm = (rating, movie_id) => {
+export const rateFilm = (rating: number, movie_id: number) => {
   const options = {
     method: 'POST',
     url: `https://api.themoviedb.org/3/movie/${movie_id}/rating`,

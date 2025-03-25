@@ -1,0 +1,13 @@
+@import './reset.scss';
+
+body {
+  background-color: rgba(128, 128, 128, 0.1);
+}
+
+.app {
+  background: linear-gradient(90deg, rgba(128, 128, 128, 0.1), white, rgba(128, 128, 128, 0.1));
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #fff;
+  width: 1010px;
+}

@@ -6,6 +6,7 @@ export interface IFilm {
   release_date: string;
   genre_ids: number[];
   vote_average: number;
+  rating?: number;
 }
 
 export interface IFilms {

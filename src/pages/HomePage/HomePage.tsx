@@ -9,8 +9,9 @@ import classes from './HomePage.module.scss';
 
 const HomePage = () => {
   const [value, setValue] = useState('movie/popular');
+  const [pages, setPages] = useState(1);
   const [page, setPage] = useState(1);
-  console.log(page);
+  console.log(pages);
 
   return (
     <>
@@ -26,10 +27,10 @@ const HomePage = () => {
           console.log(e.target.value);
         }, 500)}
       />
-      <CardList page={page} value={value} />
+      <CardList page={page} value={value} setPages={setPages} />
       <Pagination
         defaultCurrent={1}
-        total={50}
+        total={pages * 10}
         className={classes.pagination}
         onChange={pages => setPage(pages)}
       />

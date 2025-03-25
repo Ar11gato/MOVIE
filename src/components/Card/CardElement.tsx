@@ -3,7 +3,7 @@ import classes from './CardElement.module.scss';
 import colorAverage from '../../helpers/colorAverage.ts';
 import { IFilm } from '../../types/types.ts';
 
-import { rateFilm } from '../../api/filmService.ts';
+import { deleteRateFilm, rateFilm } from '../../api/filmService.ts';
 
 const CardElement = ({
   id,
@@ -13,6 +13,7 @@ const CardElement = ({
   release_date,
   genre_ids,
   vote_average,
+  rating,
 }: IFilm) => {
   return (
     <Card hoverable={true} className={classes.card} variant="borderless">
@@ -56,7 +57,18 @@ const CardElement = ({
             <Rate
               className={classes.rate}
               count={10}
-              onChange={val => rateFilm(val, id)}
+              defaultValue={rating ? rating : 0}
+              onChange={val => {
+                if (val) {
+                  rateFilm(val, id)
+                    .then(r => console.log('succes:', r))
+                    .catch(error => console.error('error', error));
+                } else {
+                  deleteRateFilm(id)
+                    .then(r => console.log('succes:', r))
+                    .catch(error => console.error('error', error));
+                }
+              }}
             />
           </ConfigProvider>
         </div>

@@ -8,7 +8,7 @@ import { debounce } from 'lodash';
 import classes from './HomePage.module.scss';
 
 const HomePage = () => {
-  const [value, setValue] = useState('movie/popular');
+  const [value, setValue] = useState('');
   const [pages, setPages] = useState(1);
   const [page, setPage] = useState(1);
   console.log(pages);
@@ -20,9 +20,9 @@ const HomePage = () => {
         placeholder="Search"
         onChange={debounce(e => {
           if (e.target.value === '') {
-            setValue('movie/popular');
+            setValue('');
           } else {
-            setValue('search/movie?query=' + e.target.value);
+            setValue(e.target.value);
           }
           console.log(e.target.value);
         }, 500)}

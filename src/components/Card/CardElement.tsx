@@ -2,8 +2,14 @@ import { Card, Rate, ConfigProvider } from 'antd';
 import classes from './CardElement.module.scss';
 import colorAverage from '../../helpers/colorAverage.ts';
 import { IFilm } from '../../types/types.ts';
+import moment from 'moment';
 
-import { deleteRateFilm, rateFilm } from '../../api/filmService.ts';
+import {
+  deleteRateFilm,
+  getNameGenres,
+  rateFilm,
+} from '../../api/filmService.ts';
+import { useEffect, useState } from 'react';
 
 const CardElement = ({
   id,
@@ -15,6 +21,27 @@ const CardElement = ({
   vote_average,
   rating,
 }: IFilm) => {
+  const [genres, setGenres] = useState([]);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  const convertIdGenres = nameGenres => {
+    let genre_names: string[] = [];
+    let id_genre = '';
+    genre_ids.map(genre_id => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      id_genre = nameGenres.find(genre => genre_id === genre.id).name;
+      genre_names = [id_genre, ...genre_names];
+    });
+    console.log(genre_names);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    setGenres(genre_names);
+  };
+  useEffect(() => {
+    getNameGenres().then(res => convertIdGenres(res.data.genres));
+  }, []);
+
   return (
     <Card hoverable={true} className={classes.card} variant="borderless">
       <div className={classes.information}>
@@ -34,14 +61,19 @@ const CardElement = ({
               className={classes.vote}
               style={{
                 border: `2px solid ${colorAverage(vote_average)}`,
-                backgroundColor: colorAverage(vote_average),
               }}
             >
-              {vote_average}
+              {vote_average.toFixed(1)}
             </div>
           </div>
-          <div className={classes.date}>{release_date}</div>
-          <div className={classes.genres}>{genre_ids}</div>
+          <div className={classes.date}>
+            {moment(release_date).format('LL')}
+          </div>
+          <div className={classes.genres}>
+            {genres.map(genre => (
+              <div className={classes.genre}>{genre}</div>
+            ))}
+          </div>
           <div className={classes.text}>{overview}</div>
           <ConfigProvider
             theme={{

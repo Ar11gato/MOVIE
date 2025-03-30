@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { getFavouriteFilms, getFilms } from '../../api/filmService.ts';
+import { useEffect, useState } from 'react';
+import {
+  getFavouriteFilms,
+  getFilms,
+  searchFilms,
+} from '../../api/filmService.ts';
 import { IFilms } from '../../types/types.ts';
 import { Col, Row } from 'antd';
 import CardElement from '../Card/CardElement.tsx';
@@ -8,15 +12,13 @@ import classes from './CardList.module.scss';
 interface CardListProps {
   page: number;
   value: string;
-  setPages: React.Dispatch<React.SetStateAction<number>>;
+  setPages: (total_pages: number) => void;
 }
 
 const CardList = ({ page, value, setPages }: CardListProps) => {
   const [result, setResult] = useState<IFilms>({ results: [] });
   useEffect(() => {
-    if (
-      value === 'https://api.themoviedb.org/3/account/20448224/rated/movies'
-    ) {
+    if (value === 'rated movies') {
       getFavouriteFilms(page)
         .then(
           res => (
@@ -26,9 +28,9 @@ const CardList = ({ page, value, setPages }: CardListProps) => {
           )
         )
         .catch(err => console.error(err));
-    } else {
+    } else if (value === '') {
       window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-      getFilms(page, value)
+      getFilms(page)
         .then(
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error
@@ -41,6 +43,12 @@ const CardList = ({ page, value, setPages }: CardListProps) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
         .catch(err => console.error(err));
+    } else {
+      searchFilms(page, value).then(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        res => (setResult(res.data), setPages(res.data.total_pages))
+      );
     }
   }, [page, value]);
   return (

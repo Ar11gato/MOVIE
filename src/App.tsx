@@ -1,9 +1,8 @@
-import React from 'react';
 import Navigation from './components/Navigation/Navigation.tsx';
 import './styles/global.scss';
 import Router from './router/Router.tsx';
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <>
       <div className="app">

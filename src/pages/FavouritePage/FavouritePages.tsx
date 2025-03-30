@@ -5,7 +5,7 @@ import classes from '../HomePage/HomePage.module.scss';
 import CardList from '../../components/CardList/CardList.tsx';
 
 const FavouritePages = () => {
-  const value = 'https://api.themoviedb.org/3/account/20448224/rated/movies';
+  const value = 'rated movies';
 
   const [pages, setPages] = useState(1);
   const [page, setPage] = useState(1);

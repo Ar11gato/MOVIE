@@ -1,16 +1,34 @@
 import axios from 'axios';
 
 export const getFilms = (
-  page: number,
-  value: string
-
+  page: number
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
 ): axios.AxiosRequestConfig['data'] => {
   const options = {
     method: 'GET',
-    url: `https://api.themoviedb.org/3/${value}`,
+    url: `https://api.themoviedb.org/3/movie/popular`,
     params: { language: 'en-US', page },
+    headers: {
+      accept: 'application/json',
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ODk3ZTA4NWZlMGI2ZjI3MGRjMzIyYmY0M2QxNDI1NyIsIm5iZiI6MTY5NDg5MzE5Ny4xOTEsInN1YiI6IjY1MDYwNDhkNDU3NjVkMDBjNmQzYzQ0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bx2V7gHvTaJs1Uth7fLYOOwa2hfYGxYzK_vFZNMQ3D4',
+    },
+  };
+  console.log('page', page);
+
+  return axios.request(options);
+};
+export const searchFilms = (
+  page: number,
+  value: string
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+): axios.AxiosRequestConfig['data'] => {
+  const options = {
+    method: 'GET',
+    url: `https://api.themoviedb.org/3/search/movie`,
+    params: { query: value, language: 'en-US', page },
     headers: {
       accept: 'application/json',
       Authorization:
@@ -58,6 +76,21 @@ export const getFavouriteFilms = (page: number) => {
     method: 'GET',
     url: 'https://api.themoviedb.org/3/account/20448224/rated/movies',
     params: { language: 'en-US', page, sort_by: 'created_at.asc' },
+    headers: {
+      accept: 'application/json',
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ODk3ZTA4NWZlMGI2ZjI3MGRjMzIyYmY0M2QxNDI1NyIsIm5iZiI6MTY5NDg5MzE5Ny4xOTEsInN1YiI6IjY1MDYwNDhkNDU3NjVkMDBjNmQzYzQ0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bx2V7gHvTaJs1Uth7fLYOOwa2hfYGxYzK_vFZNMQ3D4',
+    },
+  };
+
+  return axios.request(options);
+};
+
+export const getNameGenres = () => {
+  const options = {
+    method: 'GET',
+    url: 'https://api.themoviedb.org/3/genre/movie/list',
+    params: { language: 'en' },
     headers: {
       accept: 'application/json',
       Authorization:
